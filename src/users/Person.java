@@ -8,18 +8,12 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
 
-    boolean available;
-   transient SimpleStringProperty emailss;
-    transient SimpleStringProperty fullnamess;
-    transient SimpleStringProperty addressss;
-    transient SimpleStringProperty aliasss;
-    transient SimpleStringProperty availss;
+    private boolean available;
     private String email;
     private String fullName;
     private String password;
     private Image image;
     private double balance = 0.0;
-    private String address;
     private String alias;
     private File file;
 
@@ -44,8 +38,7 @@ public class Person implements Serializable {
         this.fullName = fullName;
         this.password = password;
         this.image = image;
-        this.emailss = new SimpleStringProperty(email) ;
-        this.fullnamess = new SimpleStringProperty(fullName);
+
     }
 
     public boolean isAvailable() {
@@ -54,7 +47,6 @@ public class Person implements Serializable {
 
     public void setAvailable(boolean available) {
         this.available = available;
-        this.availss = new SimpleStringProperty("yes");
     }
 
     public String getAlias() {
@@ -63,16 +55,6 @@ public class Person implements Serializable {
 
     public void setAlias(String alias) {
         this.alias = alias;
-        this.aliasss = new SimpleStringProperty(alias);
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-        this.addressss = new SimpleStringProperty(address);
     }
 
     public double getBalance() {
@@ -97,7 +79,6 @@ public class Person implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-        this.fullnamess = new SimpleStringProperty(fullName);
     }
 
     public String getPassword() {

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Farmer extends Person implements FarmerOptions {
 
-    private String Address;
+    private String address;
     private int chatPort = new Random().nextInt(4500)+4000;
 
     public int getChatPort() {
@@ -21,7 +21,7 @@ public class Farmer extends Person implements FarmerOptions {
 
     public Farmer(String email, String fullName, String password, String address) {
         super(email, fullName, password);
-        Address = address;
+        address = address;
     }
 
     public Farmer() {
@@ -29,11 +29,11 @@ public class Farmer extends Person implements FarmerOptions {
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        address = address;
     }
 
     @Override
