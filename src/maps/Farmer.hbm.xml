@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 19, 2017 7:11:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="users.Farmer" table="farmers">
+
+        <meta attribute = "class-description">
+            This class contains the employee detail.
+        </meta>
+
+        <id name="email" column="email" type="string"/>
+        <property name="chatPort" column="chatPort" type="java.lang.Integer"/>
+        <property name="address" column="address" type="java.lang.String"/>
+        <property name="balance" type="java.lang.Double" column="balance"/>
+        <property name="available" column="available" type="java.lang.Boolean"/>
+        <property name="fullName" type="java.lang.String" column="name"/>
+        <property name="image" column="image" type="blob"/>
+        <property name="password" type="java.lang.String" column="password"/>
+        <property name="alias" type="java.lang.String" column="type"/>
+
+
+    </class>
+</hibernate-mapping>
