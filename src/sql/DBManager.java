@@ -7,6 +7,9 @@ import users.Customer;
 import users.Farmer;
 import users.Person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBManager extends Main {
 
     private static DBManager instance;
@@ -113,6 +116,24 @@ public class DBManager extends Main {
         return crop;
     }
 
+    public ArrayList getCrops(String key) {
+        session = getSession();
+        Crop crop = null;
+        List l = new ArrayList();
+
+        try {
+         //   crop = session.get(Crop.class, id);
+            l = session.createQuery("from Crop c where c.owner=:id").setParameter("id", key).list();
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+
+        } finally {
+            session.close();
+        }
+        ArrayList list = (ArrayList) l;
+        return list;
+    }
 
     public int checkPresent(String email, String pass){
         session = getSession();

@@ -306,41 +306,43 @@ public class SqlAccessor {
     public ArrayList getCrops(Person user) {
         ArrayList<Object> list = new ArrayList<Object>();
 
-        //	connection = sqliteConnection.dbConnector();
-        try {
-            qst = "select * from crops";// where email ='"+user.getEmail()+"'";
-
-            PreparedStatement pst = connection.prepareStatement(qst);
-            ResultSet rs = pst.executeQuery();
-
-            if (!rs.isClosed()) {
-                while (rs.next()) {
-
-                    Crop S = new Crop();
-
-                    S.setName(rs.getString(1));
-                    S.setWeight(Double.parseDouble(rs.getString(2)));
-                    S.setCost(Double.parseDouble(rs.getString(3)));
-                    S.setQuantity(Double.parseDouble(rs.getString(4)));
-                    S.setAvailable(rs.getBoolean(6));
-
-
-                    list.add(S);
-                }
-
-
-            }
-
-            return list;
-
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-        }
-
-
-        return null;
+        return dbManager.getCrops(user.getEmail());
+//
+//        //	connection = sqliteConnection.dbConnector();
+//        try {
+//            qst = "select * from crops";// where email ='"+user.getEmail()+"'";
+//
+//            PreparedStatement pst = connection.prepareStatement(qst);
+//            ResultSet rs = pst.executeQuery();
+//
+//            if (!rs.isClosed()) {
+//                while (rs.next()) {
+//
+//                    Crop S = new Crop();
+//
+//                    S.setName(rs.getString(1));
+//                    S.setWeight(Double.parseDouble(rs.getString(2)));
+//                    S.setCost(Double.parseDouble(rs.getString(3)));
+//                    S.setQuantity(Double.parseDouble(rs.getString(4)));
+//                    S.setAvailable(rs.getBoolean(6));
+//
+//
+//                    list.add(S);
+//                }
+//
+//
+//            }
+//
+//            return list;
+//
+//
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//
+//        return null;
     }
 
     public int checkAgainstCropAndUpdate(Crop c,String updateval) {
