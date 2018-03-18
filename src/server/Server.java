@@ -34,9 +34,9 @@ public class Server  {
                 Thread t = new Thread(new ServerCore(sock, os,is));
                 t.start();
             }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+        } catch (IOException ep) {
+            logger.error(ep.getMessage());
+            ep.printStackTrace();
         }
 
     }
