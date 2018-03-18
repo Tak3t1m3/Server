@@ -4,9 +4,13 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.File;
 import java.io.Serializable;
 
+
+@MappedSuperclass
 public abstract class Crops implements Serializable {
 
 
@@ -15,6 +19,7 @@ public abstract class Crops implements Serializable {
     protected double weight, cost, quantity;
     protected boolean available;
     protected File imagefile;
+    @Id
     protected String owner;
 
     public String getOwner() {

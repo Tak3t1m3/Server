@@ -19,7 +19,6 @@ public class SqlAccessor {
     private PreparedStatement preparedStatement;
     private ResultSet rs;
     private static String qst;
-
     private static Logger logger = LogManager.getRootLogger();
 
 
@@ -149,68 +148,27 @@ public class SqlAccessor {
 
     public Person getPerson(String text, int a) {
 
-        Person p = null;
-        qst = null;
-    //    System.out.println(text);
-        String variable;
-
         if (a == 1) {
-            variable = "farmers";
-            qst = "select * from " + variable + " where email ='" + text + "'";
+
+            return dbManager.getFarmer(text);
         } else {
-            variable = "customers";
-            qst = "select * from " + variable + " where email ='" + text + "'";
+
+            return dbManager.getCustomer(text);
         }
 
 
-        PreparedStatement pre = null;
-        try {
-            pre = connection.prepareStatement(qst);
-            ResultSet rs = pre.executeQuery();
-            rs.next();
-            //  p=new Person(rs.getString(1),rs.getString(2),rs.getString(3));
-
-            if (a==1) {
-                p = new Farmer();
-                Farmer farmer = (Farmer) p;
-
-                farmer.setEmail(rs.getString(1));
-                farmer.setPassword(rs.getString(2));
-                farmer.setFullName(rs.getString(3));
-                farmer.setAddress(rs.getString(4));
-                farmer.setAlias("farmer");
-                farmer.setAvailable(rs.getBoolean(6));
-                farmer.setBalance((float) rs.getDouble(7));
-                farmer.setChatPort((int) rs.getLong(9));
-
-                return farmer;
-            }
-            else {
-                p = new Customer();
-
-                p.setEmail(rs.getString(1));
-                p.setPassword(rs.getString(2));
-                p.setFullName(rs.getString(3));
-                p.setBalance((float) rs.getDouble(6));
-
-                return p;
-            }
 
 
 
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-        }
-
-        return p;
 
 
     }
 
 
     public void uploadImage(Person user, File ill) {
+
+
+
 
         try {
         String qst = null;
@@ -315,28 +273,31 @@ public class SqlAccessor {
 
     public boolean createCrop(Crop c, Person p) {
 
-        qst = "insert into crops values(?,?,?,?,?,?,?)";
+        dbManager.add(c);
+        return true;
 
-        try {
-            PreparedStatement pp = connection.prepareStatement(qst);
-            pp.setString(1, c.getName());
-            FileInputStream f = new FileInputStream(c.getImagefile());
-
-         //   ImageIO.write((RenderedImage) c.getImage(),"",fil);
-            pp.setBinaryStream(5,f, (int) c.getImagefile().length());
-            pp.setDouble(2, c.getWeight());
-            pp.setDouble(3, c.getCost());
-            pp.setDouble(4, c.getQuantity());
-            pp.setBoolean(6, c.isAvailable());
-            pp.setString(7, p.getEmail());
-
-            pp.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
+//        qst = "insert into crops values(?,?,?,?,?,?,?)";
+//
+//        try {
+//            PreparedStatement pp = connection.prepareStatement(qst);
+//            pp.setString(1, c.getName());
+//            FileInputStream f = new FileInputStream(c.getImagefile());
+//
+//         //   ImageIO.write((RenderedImage) c.getImage(),"",fil);
+//            pp.setBinaryStream(5,f, (int) c.getImagefile().length());
+//            pp.setDouble(2, c.getWeight());
+//            pp.setDouble(3, c.getCost());
+//            pp.setDouble(4, c.getQuantity());
+//            pp.setBoolean(6, c.isAvailable());
+//            pp.setString(7, p.getEmail());
+//
+//            pp.executeUpdate();
+//            return true;
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            e.printStackTrace();
+//            return false;
+//        }
 
     }
 
@@ -381,6 +342,8 @@ public class SqlAccessor {
     }
 
     public int checkAgainstCropAndUpdate(Crop c,String updateval) {
+
+        dbManager.update(c);
 
 
         if(updateval.equalsIgnoreCase("name")==true) {
@@ -427,6 +390,7 @@ public class SqlAccessor {
 
     public int updateCustomerBal(Customer c){
 
+        dbManager.update(c);
         qst = "Update customers Set Balance = '" + c.getBalance()+ "'where email= '" + c.getEmail() + "'";
 
         try {
@@ -488,6 +452,7 @@ public class SqlAccessor {
 
     public void updateCrop(Crop c, Person p) {
 
+        dbManager.update(c);
 
         qst = "update crops set weight = '"+c.getWeight()+"' , cost ='"+c.getCost()+"' , quantity= '"+c.getQuantity()+"', availabe = '"+c.isAvailable()+"' where name ='"+c.getName()+"'";
         try {

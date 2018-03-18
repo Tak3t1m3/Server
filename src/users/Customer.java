@@ -3,8 +3,12 @@ package users;
 import crops.Crop;
 import interfaces.CustomerOptions;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "customers")
 public class Customer extends Person implements CustomerOptions {
 
 
