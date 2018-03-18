@@ -2,28 +2,25 @@ package users;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
+import org.hibernate.engine.jdbc.BinaryStream;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.File;
 import java.io.Serializable;
 
+@MappedSuperclass
 public class Person implements Serializable {
 
-    private boolean available;
     private String email;
+    private boolean available;
     private String fullName;
     private String password;
     private Image image;
     private double balance = 0.0;
     private String alias;
-    private File file;
 
-    public File getFile() {
-        return file;
-    }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
 
 
 
@@ -65,6 +62,7 @@ public class Person implements Serializable {
         this.balance = balance;
     }
 
+    @Id
     public String getEmail() {
         return email;
     }
@@ -89,9 +87,12 @@ public class Person implements Serializable {
         this.password = password;
     }
 
-    public Image getImage() {
-        return image;
-    }
+    public Byte[] getImage() {
+       // return (Byte[]) image;
+        if(image!=null)
+            return new Byte[(int)image.toString().length()];
+        else
+            return null;    }
 
     public void setImage(Image image) {
         this.image = image;

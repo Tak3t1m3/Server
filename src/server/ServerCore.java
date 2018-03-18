@@ -75,7 +75,7 @@ public class ServerCore implements Runnable {
 
                 if(command.compareToIgnoreCase("getuser")==0 ){
 
-                    Person p = accessor.getPerson((String)is.readObject(),(int)is.readObject());
+                    Person p = accessor.getPerson((String)is.readObject(),(Integer) is.readObject());
                     clients.add(p);
                     os.writeObject(p);
                 }

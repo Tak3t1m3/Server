@@ -23,6 +23,7 @@ public class SqlAccessor {
     private static Logger logger = LogManager.getRootLogger();
 
 
+    private DBManager dbManager = new DBManager();
 
     public SqlAccessor() {
         try {
@@ -32,13 +33,21 @@ public class SqlAccessor {
 
 
             Class.forName("org.sqlite.JDBC");
+          //  Class.forName("com.mysql.jdbc.Driver");
 
             File exist = new File("Farm.sqlite");
+          //  File exist = new File("Farm2.sql");
             if (exist.exists())
                 connection = DriverManager.getConnection("jdbc:sqlite:Farm.sqlite");
+              //  connection = DriverManager.getConnection("jdbc:mysql:Farm2.sql");
+//            connect = DriverManager
+//                    .getConnection("jdbc:mysql://localhost/feedback?"
+//                            + "user=sqluser&password=sqluserpw");
             else{
                 exist.createNewFile();
                 connection = DriverManager.getConnection("jdbc:sqlite:Farm.sqlite");
+              //  connection = DriverManager.getConnection("jdbc:mysql:Farm2.sql");
+
                 String createFarmers = "create table farmers (email varchar(25) primary key, password varchar(25), name varchar(50), address varchar(50),type varchar(15),image blob,available boolean,balance float, chatPort long)";
                 String createCustomers = "create table customers (email varchar(25) primary key, password varchar(25), name varchar(50), type varchar(15),image blob, balance float)";
                 String createCrops = "create table crops ( name varchar(50), weight float, cost float, quantity float, image blob, availabe boolean, farmerEmail varchar (50))";
@@ -70,7 +79,8 @@ public class SqlAccessor {
     }
 
     public int signUp(Person p) {
-        qst = null;
+
+     /*   qst = null;
         if (p instanceof Customer) {
             qst = "insert into customers (name,email,password,type, balance) values('" + p.getFullName() + "','" + p.getEmail() + "','" + p.getPassword() + "','customer','00.00')";
         }
@@ -86,7 +96,11 @@ public class SqlAccessor {
         } catch (SQLException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-        }
+        }*/
+
+     dbManager.add(p);
+
+
         return 0;
     }
 

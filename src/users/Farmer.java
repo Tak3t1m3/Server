@@ -3,9 +3,13 @@ package users;
 import crops.Crop;
 import interfaces.FarmerOptions;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Random;
 
+@Entity
+@Table(name = "farmers")
 public class Farmer extends Person implements FarmerOptions {
 
     private String address;
@@ -60,4 +64,6 @@ public class Farmer extends Person implements FarmerOptions {
     public void viewHistory() {
 
     }
+
+
 }
