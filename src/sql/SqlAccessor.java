@@ -106,44 +106,46 @@ public class SqlAccessor {
 
     public int signIn(String email, String password) {
 
-        int h = 0;
-        String variable = "farmers";
-        while (true) {
+        return dbManager.checkPresent(email, password);
 
-            if (h == 1)
-                variable = "customers";
-
-            qst = "select email, password, type from " + variable + " where email ='" + email + "'";
-            ResultSet rs = null;
-            PreparedStatement pp = null;
-            try {
-                pp = connection.prepareStatement(qst);
-                rs = pp.executeQuery();
-                //   rs.next();
-
-                if (rs.next()) {
-                    if (rs.getString(1).compareTo(email) == 0 && rs.getString(2).compareTo(password) == 0) {
-                        // System.out.println("access grandted");
-                        if (rs.getString(3).compareTo("farmer") == 0)
-                            return 1;
-                        else
-                            return 2;
-
-                    }
-                }
-
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
-                e.printStackTrace();
-            }
-
-            if (h == 1)
-                break;
-            h++;
-        }
-
-
-        return 0;
+//        int h = 0;
+//        String variable = "farmers";
+//        while (true) {
+//
+//            if (h == 1)
+//                variable = "customers";
+//
+//            qst = "select email, password, type from " + variable + " where email ='" + email + "'";
+//            ResultSet rs = null;
+//            PreparedStatement pp = null;
+//            try {
+//                pp = connection.prepareStatement(qst);
+//                rs = pp.executeQuery();
+//                //   rs.next();
+//
+//                if (rs.next()) {
+//                    if (rs.getString(1).compareTo(email) == 0 && rs.getString(2).compareTo(password) == 0) {
+//                        // System.out.println("access grandted");
+//                        if (rs.getString(3).compareTo("farmer") == 0)
+//                            return 1;
+//                        else
+//                            return 2;
+//
+//                    }
+//                }
+//
+//            } catch (SQLException e) {
+//                logger.error(e.getMessage());
+//                e.printStackTrace();
+//            }
+//
+//            if (h == 1)
+//                break;
+//            h++;
+//        }
+//
+//
+//        return 0;
     }
 
     public Person getPerson(String text, int a) {

@@ -4,24 +4,27 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 
 @MappedSuperclass
-public abstract class Crops implements Serializable {
+public class Crops implements Serializable {
 
 
-    protected String name;
-    protected Image image;
-    protected double weight, cost, quantity;
-    protected boolean available;
-    protected File imagefile;
+    private String name;
+    private Image image;
+    private double weight, cost, quantity;
+    private boolean available;
+    private File imagefile;
+
+    private String owner;
     @Id
-    protected String owner;
-
     public String getOwner() {
         return owner;
     }
@@ -42,17 +45,7 @@ public abstract class Crops implements Serializable {
 
     }
 
-    public Crops(String name, Image image, double weight, double cost, double quantity, boolean available, File imagefile) {
-        this.name = name;
-        this.image = image;
-        this.weight = weight;
-        this.cost = cost;
-        this.quantity = quantity;
-        this.available = available;
-        this.imagefile = imagefile;
 
-
-    }
 
     public Crops(String name, double weight, double cost, double quantity, boolean available, File imagefile) {
         this.name = name;
@@ -74,14 +67,22 @@ public abstract class Crops implements Serializable {
         this.name = name;
     }
 
-    public Image getImage() {
-        return image;
-    }
+    public Byte[] getImage() {
+        // return (Byte[]) image;
+        if(image!=null)
+            return new Byte[(int)image.toString().length()];
+        else
+            return null;    }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    public void setImage(byte[] image) {
 
+
+        try {
+            this.image = Image.impl_fromPlatformImage(ImageIO.read(new ByteArrayInputStream(image)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public double getWeight() {
         return weight;
     }
